@@ -40,19 +40,26 @@ class _DemoFuturePageState extends State<DemoFuturePage> {
    //    });
    //  });
 
-    sum(3, 1)
-        .then((tong) => minus(tong as int, 1))
-        .then((hieu) => multiplication(hieu, 5))
-        .then((result) {
-          throw Exception("abc");
-        })
-        .catchError((error) => print("pphat"));
+    // sum(3, 1)
+    //     .then((tong) => minus(tong as int, 1))
+    //     .then((hieu) => multiplication(hieu, 5))
+    //     .then((result) {
+    //       return Future.error(Exception("abc"));
+    //     })
+    //     .catchError((error) => print(error));
+
+    calculator().then((value) => print(value));
   }
 
-  Future<num> sum(int a, dynamic b) {
-    return Future.delayed(Duration(seconds: 1), () {
-      return a + (b as num);
-    });
+  Future<int> calculator() async {
+     var tong = await sum(3, 1);
+     var hieu = await minus(tong, 1);
+     var result = await multiplication(hieu, 5);
+     return result;
+  }
+
+  Future<int> sum(int a, int b) {
+    return Future.delayed(Duration(seconds: 1), () => a + b);
   }
 
   Future<int> minus(int a, int b) {
