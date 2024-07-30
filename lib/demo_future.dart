@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
@@ -47,15 +48,18 @@ class _DemoFuturePageState extends State<DemoFuturePage> {
     //       return Future.error(Exception("abc"));
     //     })
     //     .catchError((error) => print(error));
-
-    calculator().then((value) => print(value));
   }
 
   Future<int> calculator() async {
-     var tong = await sum(3, 1);
-     var hieu = await minus(tong, 1);
-     var result = await multiplication(hieu, 5);
-     return result;
+    try {
+      var tong = Random.secure().nextBool() ? throw Exception("abc") : await sum(3, 1);
+      var hieu = await minus(tong, 1);
+      var result = await multiplication(hieu, 5);
+      return result;
+    } catch (e) {
+      print(e.toString());
+      return Future(() => 0);
+    }
   }
 
   Future<int> sum(int a, int b) {
