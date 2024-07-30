@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ffi';
 import 'dart:math';
 
@@ -48,6 +49,17 @@ class _DemoFuturePageState extends State<DemoFuturePage> {
     //       return Future.error(Exception("abc"));
     //     })
     //     .catchError((error) => print(error));
+
+    calculator2().then((value) => print(value)).catchError((error) => print(error));
+  }
+
+  Future<int> calculator2() {
+    Completer<int> completer = Completer();
+    Timer(const Duration(seconds: 3), () {
+      completer.completeError(Exception("abc"));
+    });
+
+    return completer.future;
   }
 
   Future<int> calculator() async {
