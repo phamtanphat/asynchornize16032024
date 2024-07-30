@@ -50,7 +50,7 @@ class _DemoFuturePageState extends State<DemoFuturePage> {
     //     })
     //     .catchError((error) => print(error));
 
-    calculator2().then((value) => print(value)).catchError((error) => print(error));
+    // calculator2().then((value) => print(value)).catchError((error) => print(error));
   }
 
   Future<int> calculator2() {
@@ -92,7 +92,25 @@ class _DemoFuturePageState extends State<DemoFuturePage> {
       appBar: AppBar(
         title: Text("Demo Future page"),
       ),
-      body: Container()
+      body: Container(
+        child: Center(
+          child: FutureBuilder<int>(
+              initialData: 0,
+              future: calculator(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text("Error");
+                } else  if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasData) {
+                  return Text(snapshot.data.toString());
+                } else {
+                  return SizedBox();
+                }
+              },
+          ),
+        ),
+      )
     );
   }
 }
